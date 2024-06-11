@@ -4,6 +4,7 @@
 #include <unordered_map>
 using namespace std;
 
+
 class Solution {
 public:
     vector<string> letterCombinations(string digits) {
@@ -19,21 +20,24 @@ public:
         alphabet['8'] = "tuv";
         alphabet['9'] = "wxyz";
        
-        dfs(0, "");
+        dfs(0);
         return ans;
     }
 
 private:
-    void dfs(int index, string str) {
+    void dfs(int index) {
         if (index == digits.length()) {
             ans.push_back(str);
             return;
         }
         for (char ch : alphabet[digits[index]]) {
-            dfs(index + 1, str + ch);
+            str.push_back(ch);
+            dfs(index + 1);
+            str.pop_back();
         }
     }
     string digits;
+    string str;
     vector<string> ans;
     unordered_map<char, string> alphabet;
 };
