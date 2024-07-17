@@ -2,6 +2,8 @@
 
 #include <string>
 #include <chrono>
+#include <algorithm>
+
 #include <cassert>
 #include <ctime>
 
@@ -40,14 +42,20 @@ bool isSorted(T arr[], int n) {
 template <typename T>
 void testSort(std::string sortName, void (*sort)(T[], int), T arr[], int n) {
     clock_t startTime = clock();
-    auto start_time = std::chrono::steady_clock::now();
+    //auto start_time = std::chrono::steady_clock::now();
     sort(arr, n);
-    auto end_time = std::chrono::steady_clock::now();
+    //auto end_time = std::chrono::steady_clock::now();
     clock_t endTime = clock();
-    clock_t duration = endTime - startTime;
-    std::chrono::duration<float> elapsed_seconds = end_time - start_time;
+    //std::chrono::duration<float> elapsed_seconds = end_time - start_time;
     assert(isSorted(arr, n));
-    cout << sortName << " : " << double(duration) / CLOCKS_PER_SEC << "s" << endl;
-    cout << sortName << " : " << elapsed_seconds.count() << "s" << endl;
+    cout << sortName << " : " << double(endTime - startTime) / CLOCKS_PER_SEC << "s" << endl;
+    //cout << sortName << " : " << elapsed_seconds.count() << "s" << endl;
 }
+
+int* copyIntArray(int a[], int n ) {
+    int* arr = new int[n];
+    std::copy(a, a+n, arr);
+    return arr;
+}
+
 } // namespace SortTestHelper
