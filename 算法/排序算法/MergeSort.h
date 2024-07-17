@@ -1,5 +1,7 @@
 #pragma once
 
+#include "InsertionSort.h"
+
 //将arr[l ... mid] 和 arr[mid+1 ... r]两部分进行归并
 template <typename T>
 void __merge(T arr[], int l, int mid, int r) {
@@ -29,7 +31,7 @@ void __merge(T arr[], int l, int mid, int r) {
             arr[k] = aux[j - l];
             j++;
         }
-        else if (j > r) { // 如果右半部分元素已经全部处理完毕
+        else if (j > r) {   // 如果右半部分元素已经全部处理完毕
             arr[k] = aux[i - l];
             i++;
         }
@@ -41,13 +43,19 @@ void __merge(T arr[], int l, int mid, int r) {
 // 递归使用归并排序，对arr[l ... r]的范围进行排序
 template <typename T>
 void __mergeSort(T arr[], int l, int r) {
-    if (l >= r) {
+    // 优化2: 对于小规模数组, 使用插入排序
+    if (r - l <= 15) {
+        insertionSort(arr, l, r);
         return;
     }
+
     int mid = l + (r - l) / 2;
     __mergeSort(arr, l, mid);
     __mergeSort(arr, mid + 1, r);
-    if(arr[mid] > arr[mid+1]) {
+
+    // 优化1: 对于arr[mid] <= arr[mid+1]的情况,不进行merge
+    // 对于近乎有序的数组非常有效,但是对于一般情况,有一定的性能损失
+    if (arr[mid] > arr[mid + 1]) {
         __merge(arr, l, mid, r);
     }
 }
