@@ -13,13 +13,15 @@ int main() {
     cout << "Test for random array, size = " << n << ", random range [0, " << n << "]" << endl;
     int* arr1 = SortTestHelper::generateRandomArray(n, 0, n);
     int* arr2 = SortTestHelper::copyIntArray(arr1, n);
+    int* arr3 = SortTestHelper::copyIntArray(arr1, n);
 
     SortTestHelper::testSort("Insertion Sort", insertionSort, arr1, n);
     SortTestHelper::testSort("Merge Sort", mergeSort, arr2, n);
+    SortTestHelper::testSort("Merge Sort2", mergeSortBottomUp, arr3, n);
 
     delete[] arr1;
     delete[] arr2;
-
+    delete[] arr3;
     cout << endl;
 
     // 测试2 测试近乎有序的数组

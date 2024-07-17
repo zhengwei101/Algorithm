@@ -1,37 +1,37 @@
-#pragma once
+ï»¿#pragma once
 
 #include "InsertionSort.h"
 
-//½«arr[l ... mid] ºÍ arr[mid+1 ... r]Á½²¿·Ö½øĞĞ¹é²¢
+//å°†arr[l ... mid] å’Œ arr[mid+1 ... r]ä¸¤éƒ¨åˆ†è¿›è¡Œå½’å¹¶
 template <typename T>
 void __merge(T arr[], int l, int mid, int r) {
-    //ÏÈ¶¨ÒåÒ»¸öºÍarrÏàÍ¬´óĞ¡µÄ¸¨Öú¿Õ¼ä
+    //å…ˆå®šä¹‰ä¸€ä¸ªå’Œarrç›¸åŒå¤§å°çš„è¾…åŠ©ç©ºé—´
     T* aux = new T[r - l + 1];
 
     for (int i = l; i <= r; i++) {
         aux[i - l] = arr[i];
     }
 
-    //³õÊ¼»¯£¬iÖ¸Ïò×ó°ë²¿·ÖµÄÆğÊ¼Ë÷ÒıÖµl£»jÖ¸ÏòÓÒ°ë²¿·ÖÆğÊ¼Ë÷ÒıÎ»ÖÃmid+1
+    //åˆå§‹åŒ–ï¼ŒiæŒ‡å‘å·¦åŠéƒ¨åˆ†çš„èµ·å§‹ç´¢å¼•å€¼lï¼›jæŒ‡å‘å³åŠéƒ¨åˆ†èµ·å§‹ç´¢å¼•ä½ç½®mid+1
     int i = l;
     int j = mid + 1;
     for (int k = l; k <= r; k++) {
-        if (i <= mid && j <= r) { //Á½Êı×é¾ùÎ´Ô½½ç
-            // ×ó°ë²¿·ÖËùÖ¸ÔªËØ < ÓÒ°ë²¿·ÖËùÖ¸ÔªËØ
+        if (i <= mid && j <= r) { //ä¸¤æ•°ç»„å‡æœªè¶Šç•Œ
+            // å·¦åŠéƒ¨åˆ†æ‰€æŒ‡å…ƒç´  < å³åŠéƒ¨åˆ†æ‰€æŒ‡å…ƒç´ 
             if (aux[i - l] < aux[j - l]) {
                 arr[k] = aux[i - l];
                 i++;
             }
-            else { // ×ó°ë²¿·ÖËùÖ¸ÔªËØ >= ÓÒ°ë²¿·ÖËùÖ¸ÔªËØ
+            else { // å·¦åŠéƒ¨åˆ†æ‰€æŒ‡å…ƒç´  >= å³åŠéƒ¨åˆ†æ‰€æŒ‡å…ƒç´ 
                 arr[k] = aux[j - l];
                 j++;
             }
         }
-        else if (i > mid) { // Èç¹û×ó°ë²¿·ÖÔªËØÒÑ¾­È«²¿´¦ÀíÍê±Ï
+        else if (i > mid) { // å¦‚æœå·¦åŠéƒ¨åˆ†å…ƒç´ å·²ç»å…¨éƒ¨å¤„ç†å®Œæ¯•
             arr[k] = aux[j - l];
             j++;
         }
-        else if (j > r) {   // Èç¹ûÓÒ°ë²¿·ÖÔªËØÒÑ¾­È«²¿´¦ÀíÍê±Ï
+        else if (j > r) {   // å¦‚æœå³åŠéƒ¨åˆ†å…ƒç´ å·²ç»å…¨éƒ¨å¤„ç†å®Œæ¯•
             arr[k] = aux[i - l];
             i++;
         }
@@ -40,10 +40,10 @@ void __merge(T arr[], int l, int mid, int r) {
     delete[] aux;
 }
 
-// µİ¹éÊ¹ÓÃ¹é²¢ÅÅĞò£¬¶Ôarr[l ... r]µÄ·¶Î§½øĞĞÅÅĞò
+// é€’å½’ä½¿ç”¨å½’å¹¶æ’åºï¼Œå¯¹arr[l ... r]çš„èŒƒå›´è¿›è¡Œæ’åº
 template <typename T>
 void __mergeSort(T arr[], int l, int r) {
-    // ÓÅ»¯2: ¶ÔÓÚĞ¡¹æÄ£Êı×é, Ê¹ÓÃ²åÈëÅÅĞò
+    // ä¼˜åŒ–2: å¯¹äºå°è§„æ¨¡æ•°ç»„, ä½¿ç”¨æ’å…¥æ’åº
     if (r - l <= 15) {
         insertionSort(arr, l, r);
         return;
@@ -53,8 +53,8 @@ void __mergeSort(T arr[], int l, int r) {
     __mergeSort(arr, l, mid);
     __mergeSort(arr, mid + 1, r);
 
-    // ÓÅ»¯1: ¶ÔÓÚarr[mid] <= arr[mid+1]µÄÇé¿ö,²»½øĞĞmerge
-    // ¶ÔÓÚ½üºõÓĞĞòµÄÊı×é·Ç³£ÓĞĞ§,µ«ÊÇ¶ÔÓÚÒ»°ãÇé¿ö,ÓĞÒ»¶¨µÄĞÔÄÜËğÊ§
+    // ä¼˜åŒ–1: å¯¹äºarr[mid] <= arr[mid+1]çš„æƒ…å†µ,ä¸è¿›è¡Œmerge
+    // å¯¹äºè¿‘ä¹æœ‰åºçš„æ•°ç»„éå¸¸æœ‰æ•ˆ,ä½†æ˜¯å¯¹äºä¸€èˆ¬æƒ…å†µ,æœ‰ä¸€å®šçš„æ€§èƒ½æŸå¤±
     if (arr[mid] > arr[mid + 1]) {
         __merge(arr, l, mid, r);
     }
@@ -63,4 +63,15 @@ void __mergeSort(T arr[], int l, int r) {
 template <typename T>
 void mergeSort(T arr[], int n) {
     __mergeSort(arr, 0, n - 1);
+}
+
+//è‡ªã¡³å‘ä¸Šçš„å½’å¹¶æ’åºç®—æ³•
+template <typename T>
+void mergeSortBottomUp(T arr[], int n) {
+    for (int sz = 1; sz <= n; sz += sz) {
+        for (int i = 0; i + sz < n; i += (sz + sz)) {
+            //å¯¹arr[i ... i+sz-1]å’Œarr[i+sz ... i+2*size-1]è¿›è¡Œå½’å¹¶
+            __merge(arr, i, i + sz - 1, std::min(i + sz + sz - 1, n - 1));
+        }
+    }
 }
