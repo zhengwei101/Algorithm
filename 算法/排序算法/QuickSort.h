@@ -1,4 +1,5 @@
 #pragma once
+#include "InsertionSort.h"
 
 //对arr[l...r]部分进行partition操作
 //返回p, 使用arr[l...p-1] < arr[p]; arr[p+1...r] > arr[p]
@@ -21,9 +22,14 @@ int __partition(T arr[], int l, int r) {
 // 对arr[l...r]部分进行快速排序
 template <typename T>
 void __quickSort(T arr[], int l, int r) {
-    if (l >= r) {
+    // if (l >= r) {
+    //     return;
+    // }
+    if(r-l <= 15){
+        insertionSort(arr, l, r);
         return;
     }
+    
     int p = __partition(arr, l, r);
     __quickSort(arr, l, p - 1);
     __quickSort(arr, p + 1, r);
