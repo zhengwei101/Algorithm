@@ -12,13 +12,33 @@ using std::cout;
 using std::endl;
 
 namespace SortTestHelper {
-//生居有n个元素的随机数组，每个元素的随机范围为[rangeL, rangeR]
+//生成有n个元素的随机数组，每个元素的随机范围为[rangeL, rangeR]
 int* generateRandomArray(int n, int rangeL, int rangeR) {
     assert(rangeL <= rangeR);
     int* arr = new int[n];
     srand(time(NULL));
     for (int i = 0; i < n; i++)
         arr[i] = rand() % (rangeR - rangeL + 1) + rangeL;
+    return arr;
+}
+
+// 生成一个近乎有序的数组
+// 首先生成一个含有[0...n-1]的完全有序数组, 之后随机交换swapTimes对数据
+// swapTimes定义了数组的无序程度:
+// swapTimes == 0 时, 数组完全有序
+// swapTimes 越大, 数组越趋向于无序
+int* generateNearlyOrderedArray(int n, int swapTimes) {
+
+    int* arr = new int[n];
+    for (int i = 0; i < n; i++) {
+        arr[i] = i;
+    }
+    srand(time(NULL));
+    for (int i = 0; i < swapTimes; i++) {
+        int posx = rand() % n;
+        int posy = rand() % n;
+        std::swap(arr[posx], arr[posy]);
+    }
     return arr;
 }
 
@@ -52,9 +72,9 @@ void testSort(std::string sortName, void (*sort)(T[], int), T arr[], int n) {
     //cout << sortName << " : " << elapsed_seconds.count() << "s" << endl;
 }
 
-int* copyIntArray(int a[], int n ) {
+int* copyIntArray(int a[], int n) {
     int* arr = new int[n];
-    std::copy(a, a+n, arr);
+    std::copy(a, a + n, arr);
     return arr;
 }
 
